@@ -1,0 +1,5 @@
+{
+    "name": "knash94/repositories",
+    "description": "Laravel repositories with base repositories for eloquent with a cache decorator",
+    "require": {}
+}
