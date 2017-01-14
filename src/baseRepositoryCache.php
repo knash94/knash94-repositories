@@ -49,8 +49,8 @@ class baseRepositoryCache implements baseRepositoryContract
      */
     public function count()
     {
-        $key = $this->getCacheKey() . 'count';
-        return $this->cache->remember($key, 5, function(){
+        $key = $this->getCacheKey('count');
+        return $this->cache->tags($this->getModelName())->remember($key, 5, function(){
             return $this->repository->count();
         });
     }
@@ -64,9 +64,10 @@ class baseRepositoryCache implements baseRepositoryContract
      */
     public function countWhere($column, $value)
     {
-        $key = $this->getCacheKey() . $column . $value;
-
-        // TODO: Implement countWhere() method.
+        $key = $this->getCacheKey($column . $value);
+        return $this->cache->tags($this->getModelName())->remember($key, 5, function() use($column, $value){
+            return $this->repository->countWhere($column, $value);
+        });
     }
 
     /**
@@ -77,7 +78,7 @@ class baseRepositoryCache implements baseRepositoryContract
      */
     public function findById($id)
     {
-        return $this->cache->remember('users.' . $id, 5, function($id = 2){
+        return $this->cache->tags($this->getModelName())->remember('users.' . $id, 5, function() use ($id){
            return $this->repository->findById($id);
         });
     }
@@ -113,7 +114,7 @@ class baseRepositoryCache implements baseRepositoryContract
     public function get()
     {
         var_dump('cache key: ' . $this->getCacheKey());
-        return $this->cache->remember($this->getCacheKey(), 5, function(){
+        return $this->cache->tags($this->getModelName())->remember($this->getCacheKey(), 5, function(){
            return $this->repository->get();
         });
     }
@@ -126,7 +127,8 @@ class baseRepositoryCache implements baseRepositoryContract
      */
     public function groupBy($columns)
     {
-        // TODO: Implement groupBy() method.
+        $this->repository->groupBy($columns);
+        return $this;
     }
 
     /**
@@ -137,7 +139,8 @@ class baseRepositoryCache implements baseRepositoryContract
      */
     public function limit($limit)
     {
-        // TODO: Implement limit() method.
+        $this->repository->limit($limit);
+        return $this;
     }
 
     /**
@@ -149,7 +152,8 @@ class baseRepositoryCache implements baseRepositoryContract
      */
     public function orderBy($column, $direction = 'asc')
     {
-        // TODO: Implement orderBy() method.
+        $this->repository->orderBy($column, $direction);
+        return $this;
     }
 
     /**
@@ -160,7 +164,8 @@ class baseRepositoryCache implements baseRepositoryContract
      */
     public function select($columns = ['*'])
     {
-        // TODO: Implement select() method.
+        $this->repository->select($columns);
+        return $this;
     }
 
     /**
@@ -174,7 +179,8 @@ class baseRepositoryCache implements baseRepositoryContract
      */
     public function where($column, $operator = null, $value = null, $boolean = 'and')
     {
-        // TODO: Implement where() method.
+        $this->repository->where($column, $operator, $value, $boolean);
+        return $this;
     }
 
     /**
@@ -185,7 +191,7 @@ class baseRepositoryCache implements baseRepositoryContract
      */
     public function createMultiple(array $data)
     {
-        // TODO: Implement createMultiple() method.
+        return $this->repository->createMultiple($data);
     }
 
     /**
@@ -196,7 +202,8 @@ class baseRepositoryCache implements baseRepositoryContract
      */
     public function with($relations)
     {
-        // TODO: Implement with() method.
+        $this->repository->with($relations);
+        return $this;
     }
 
     private function getModelName()
@@ -204,9 +211,9 @@ class baseRepositoryCache implements baseRepositoryContract
         return $this->repository->getModelName();
     }
 
-    private function getCacheKey(){
+    private function getCacheKey($add = ''){
         return hash('sha256',
-            $this->repository->query()->toSql()
+            $this->repository->query()->toSql() . $add
         );
     }
 }
