@@ -1,16 +1,10 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: KyleN
- * Date: 14/01/2017
- * Time: 18:56
- */
 
-namespace knash94\repositories;
+namespace Knash94\Repositories;
 
 use Illuminate\Contracts\Cache\Repository as Cache;
 
-class baseRepositoryCache implements baseRepositoryContract
+class BaseCacheRepository implements BaseRepositoryContract
 {
 
     /**
@@ -24,7 +18,7 @@ class baseRepositoryCache implements baseRepositoryContract
 
     protected $model;
 
-    public function __construct(baseRepositoryEloquent $repository, Cache $cache)
+    public function __construct(BaseEloquentRepository $repository, Cache $cache)
     {
 
         $this->repository = $repository;
@@ -78,7 +72,8 @@ class baseRepositoryCache implements baseRepositoryContract
      */
     public function findById($id)
     {
-        return $this->cache->tags($this->getModelName())->remember('users.' . $id, 5, function() use ($id){
+        $key = $this->getCacheKey($id);
+        return $this->cache->tags($this->getModelName())->remember($key, 5, function() use ($id){
            return $this->repository->findById($id);
         });
     }
@@ -113,7 +108,7 @@ class baseRepositoryCache implements baseRepositoryContract
      */
     public function get()
     {
-        var_dump('cache key: ' . $this->getCacheKey());
+        //var_dump('cache key: ' . $this->getCacheKey());
         return $this->cache->tags($this->getModelName())->remember($this->getCacheKey(), 5, function(){
            return $this->repository->get();
         });

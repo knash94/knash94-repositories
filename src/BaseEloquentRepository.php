@@ -1,18 +1,11 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: KyleN
- * Date: 14/01/2017
- * Time: 16:47
- */
 
-namespace knash94\repositories;
-
+namespace Knash94\Repositories;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 
-class baseRepositoryEloquent implements baseRepositoryContract
+class BaseEloquentRepository implements BaseRepositoryContract
 {
 
     /**
@@ -202,7 +195,8 @@ class baseRepositoryEloquent implements baseRepositoryContract
      */
     public function with($relations)
     {
-        // TODO: Implement with() method.
+        $this->query()->with($relations);
+        return $this;
     }
 
     public function getModelName()

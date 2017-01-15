@@ -1,15 +1,8 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: KyleN
- * Date: 10/01/2017
- * Time: 18:24
- */
 
-namespace knash94\repositories;
+namespace Knash94\Repositories;
 
-
-interface baseRepositoryContract
+interface BaseRepositoryContract
 {
     /**
      * Get all models
