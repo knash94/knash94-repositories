@@ -1,0 +1,18 @@
+<?php
+
+namespace DummyNamespace;
+
+use Knash94\Repositories\BaseCacheRepository;
+
+class DummyClass extends BaseCacheRepository
+{
+    /**
+     * Replace $model with your models class
+     *
+     * example:
+     * protected $model = App\User::class;
+     *
+     * @var null
+     */
+    protected $model;
+}
