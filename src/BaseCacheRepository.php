@@ -8,7 +8,7 @@ class BaseCacheRepository implements BaseRepositoryContract
 {
 
     /**
-     * @var baseRepositoryEloquent
+     * @var baseEloquentRepository
      */
     private $repository;
     /**
@@ -20,7 +20,6 @@ class BaseCacheRepository implements BaseRepositoryContract
 
     public function __construct(BaseEloquentRepository $repository, Cache $cache)
     {
-
         $this->repository = $repository;
         $this->cache = $cache;
         $this->repository->makeModel($this->model);
@@ -108,7 +107,6 @@ class BaseCacheRepository implements BaseRepositoryContract
      */
     public function get()
     {
-        //var_dump('cache key: ' . $this->getCacheKey());
         return $this->cache->tags($this->getModelName())->remember($this->getCacheKey(), 5, function(){
            return $this->repository->get();
         });

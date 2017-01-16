@@ -23,7 +23,9 @@ class BaseEloquentRepository implements BaseRepositoryContract
     protected $query;
 
     public function __construct(){
-        $this->makeModel($this->model);
+        if ($this->model){
+            $this->makeModel($this->model);
+        }
     }
     /**
      * Get all models

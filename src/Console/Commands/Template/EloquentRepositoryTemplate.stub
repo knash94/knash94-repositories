@@ -10,7 +10,7 @@ class DummyClass extends BaseEloquentRepository
      * Replace $model with your models class
      * 
      * example: 
-     * protected $model = App\User::class;
+     * protected $model = \App\User::class;
      * 
      * @var null
      */

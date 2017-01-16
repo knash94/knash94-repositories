@@ -10,7 +10,7 @@ class DummyClass extends BaseCacheRepository
      * Replace $model with your models class
      *
      * example:
-     * protected $model = App\User::class;
+     * protected $model = \App\User::class;
      *
      * @var null
      */
