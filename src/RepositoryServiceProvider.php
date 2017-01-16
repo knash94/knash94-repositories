@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Providers;
+namespace Knash94\Repositories;
 
 use Illuminate\Support\ServiceProvider;
+use Knash94\Repositories\Console\Commands\MakeRepository;
 
 class RepositoryServiceProvider extends ServiceProvider
 {
@@ -23,6 +24,11 @@ class RepositoryServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->registerCommand();
+    }
+
+    private function registerCommand()
+    {
+        $this->commands(MakeRepository::class);
     }
 }
