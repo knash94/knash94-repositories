@@ -12,7 +12,7 @@ Open app/config with your favorite text editor and add the following line under 
 Knash94\Repositories\RepositoryServiceProvider::class,
 ```
 
-##usage
+##Usage
 To create a basic repository without cache
 ```bash
 php artisan make:repository exampleRepository
@@ -20,7 +20,7 @@ php artisan make:repository exampleRepository
 
 or with cache
 ```bash
-php artisan make:repository exampleRepository
+php artisan make:repository exampleRepository --with-cache
 ```
 
 Afterwards, open the new generated file under app/repositories/exampleRepository.php and find 
