@@ -112,6 +112,14 @@ interface BaseRepositoryContract
     public function createMultiple(array $data);
 
     /**
+     * Creates pagination
+     *
+     * @param int $amount
+     * @return mixed
+     */
+    public function paginate ($amount = 15);
+
+    /**
      * Load relations with model
      *
      * @param $relations

@@ -220,4 +220,15 @@ class BaseEloquentRepository implements BaseRepositoryContract
         $this->query = $this->model->newQuery();
         return $this->query;
     }
+
+    /**
+     * Creates pagination
+     *
+     * @param int $amount
+     * @return mixed
+     */
+    public function paginate($amount = 15)
+    {
+        return $this->query()->paginate($amount);
+    }
 }

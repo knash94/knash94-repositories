@@ -4,7 +4,7 @@ namespace Knash94\Repositories;
 
 use Illuminate\Contracts\Cache\Repository as Cache;
 
-class BaseCacheRepository implements BaseRepositoryContract
+class BaseCacheRepository implements BaseRepositoryyContract
 {
 
     /**
@@ -208,5 +208,18 @@ class BaseCacheRepository implements BaseRepositoryContract
         return hash('sha256',
             $this->repository->query()->toSql() . $add
         );
+    }
+
+    /**
+     * Creates pagination
+     *
+     * @param int $amount
+     * @return mixed
+     */
+    public function paginate($amount = 15)
+    {
+        return $this->cache->tags($this->getModelName())->remember($this->getCacheKey('.paginate'), 5, function() use($amount){
+            return $this->repository->paginate($amount);
+        });
     }
 }
